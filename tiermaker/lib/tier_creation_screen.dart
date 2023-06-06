@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
 import 'custombutton_column_iconlabel.dart';
-import 'tier_creation_screen.dart';
 
-// todo メインページが出来次第消す。
-void main(){
-  runApp(TierDitailScreen());
-}
-
-// 表詳細画面を作成する
-class TierDitailScreen extends StatelessWidget{
+class TierCreationScreen extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'tierdetailpage',
-      home: TierDitail(),
+      title: 'tiercreationscreen',
+      home: TierCreation(),
     );
   }
 }
 
 // 表詳細画面widgetを作成する。
-class TierDitail extends StatelessWidget{
+class TierCreation extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     // デバイスごとの幅と高さを取得
@@ -33,13 +26,6 @@ class TierDitail extends StatelessWidget{
       'icon_label_delete': Color(0xffff0000),
       'app_title': Color(0xff5A5858),
     };
-
-    void _goToCreationScreen(){
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => TierCreationScreen()),
-      );
-    }
 
     // 表詳細画面image部分のwidget
     Widget imageSection = Container(
@@ -56,10 +42,12 @@ class TierDitail extends StatelessWidget{
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          CustomButton_Column_Iconlabel(Icons.edit, '編集', colors['icon_label_main']!, _goToCreationScreen),
-          CustomButton_Column_Iconlabel(Icons.share, '共有', colors['icon_label_main']!),
-          CustomButton_Column_Iconlabel(Icons.file_download_outlined, '保存', colors['icon_label_main']!),
-          CustomButton_Column_Iconlabel(Icons.delete_forever, '削除', colors['icon_label_delete']!),
+          CustomButton_Column_Iconlabel(
+              Icons.add, 'Row', colors['icon_label_main']!),
+          CustomButton_Column_Iconlabel(
+              Icons.remove, 'Row', colors['icon_label_main']!),
+          CustomButton_Column_Iconlabel(
+              Icons.folder, '画像一覧', colors['icon_label_main']!),
         ],
       ),
     );
@@ -80,34 +68,45 @@ class TierDitail extends StatelessWidget{
 
     // 実際の画面構成
     return Scaffold(
+      backgroundColor: colors['black_background'],
+      appBar: AppBar(
+        // 自動で生成されるボタン(戻るボタン)の生成を拒否
+        automaticallyImplyLeading: false,
         backgroundColor: colors['black_background'],
-        appBar: AppBar(
-          backgroundColor: colors['black_background'],
-          // appbar左側ボタン
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            // todo 表一覧画面へ移動する処理を書く
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => TierCreationScreen()),
-              );
-            },
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          // todo 表一覧画面へ移動する処理を書く
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        title: Text('ここはティア表の名前が入る'),
+        // appbar右側ボタン
+        actions: [
+          TextButton(
+              child: const Text('保存'),
+              // todo 画像作成・編集内容を保存する処理を実行する。
+              onPressed: () {}
           ),
-          title: Text('ここはティア表の名前が入る'),
-          elevation: 0.0,
-        ),
-        body: Column(
-            children: [
-              SizedBox(height: 20),
-              imageSection,
-              SizedBox(height: 30),
-              buttonSection,
-              SizedBox(height: 30),
-              bottomAppLogoSection,
-              SizedBox(height: 30,)
-            ],
-        ),
+        ],
+        elevation: 0.0,
+      ),
+      body: Column(
+        children: [
+          SizedBox(height: 20),
+          imageSection,
+          SizedBox(height: 30),
+          buttonSection,
+          SizedBox(height: 30),
+          bottomAppLogoSection,
+          SizedBox(height: 30,)
+        ],
+      ),
     );
   }
+
+  void _call(){
+    print('pressed');
+  }
+
 }
