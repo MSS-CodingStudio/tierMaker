@@ -1,18 +1,8 @@
 import 'package:flutter/material.dart';
-import 'custombutton_column_iconlabel.dart';
+import 'custombutton.dart';
 
 class TierCreationScreen extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'tiercreationscreen',
-      home: TierCreation(),
-    );
-  }
-}
 
-// 表詳細画面widgetを作成する。
-class TierCreation extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     // デバイスごとの幅と高さを取得
@@ -30,7 +20,7 @@ class TierCreation extends StatelessWidget{
     // 表詳細画面image部分のwidget
     Widget imageSection = Container(
       // todo 写真サイズを決めていないので仮置きしている。決まり次第widthとheightの値を変更をする。
-      width: deviceWidth * 0.75,
+      width: deviceWidth * 0.9,
       height: deviceHeight * 0.64,
       child: Image.asset('images/sample_tier1.png',
         fit: BoxFit.contain,
@@ -42,12 +32,12 @@ class TierCreation extends StatelessWidget{
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          CustomButton_Column_Iconlabel(
-              Icons.add, 'Row', colors['icon_label_main']!),
-          CustomButton_Column_Iconlabel(
-              Icons.remove, 'Row', colors['icon_label_main']!),
-          CustomButton_Column_Iconlabel(
-              Icons.folder, '画像一覧', colors['icon_label_main']!),
+          CustomButton(
+              icon: Icons.add, label: 'Row', color: colors['icon_label_main']!),
+          CustomButton(
+              icon: Icons.remove, label: 'Row', color: colors['icon_label_main']!),
+          CustomButton(
+              icon: Icons.folder, label: '画像一覧', color: colors['icon_label_main']!),
         ],
       ),
     );
@@ -84,7 +74,12 @@ class TierCreation extends StatelessWidget{
         // appbar右側ボタン
         actions: [
           TextButton(
-              child: const Text('保存'),
+              child: const Text(
+                  '保存',
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
               // todo 画像作成・編集内容を保存する処理を実行する。
               onPressed: () {}
           ),
@@ -104,9 +99,4 @@ class TierCreation extends StatelessWidget{
       ),
     );
   }
-
-  void _call(){
-    print('pressed');
-  }
-
 }

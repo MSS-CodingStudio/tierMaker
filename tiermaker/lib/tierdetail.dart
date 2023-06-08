@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'custombutton_column_iconlabel.dart';
+import 'custombutton.dart';
 import 'tier_creation_screen.dart';
 
 // todo メインページが出来次第消す。
@@ -20,6 +20,7 @@ class TierDitailScreen extends StatelessWidget{
 
 // 表詳細画面widgetを作成する。
 class TierDitail extends StatelessWidget{
+
   @override
   Widget build(BuildContext context) {
     // デバイスごとの幅と高さを取得
@@ -33,13 +34,6 @@ class TierDitail extends StatelessWidget{
       'icon_label_delete': Color(0xffff0000),
       'app_title': Color(0xff5A5858),
     };
-
-    void _goToCreationScreen(){
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => TierCreationScreen()),
-      );
-    }
 
     // 表詳細画面image部分のwidget
     Widget imageSection = Container(
@@ -56,10 +50,18 @@ class TierDitail extends StatelessWidget{
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          CustomButton_Column_Iconlabel(Icons.edit, '編集', colors['icon_label_main']!, _goToCreationScreen),
-          CustomButton_Column_Iconlabel(Icons.share, '共有', colors['icon_label_main']!),
-          CustomButton_Column_Iconlabel(Icons.file_download_outlined, '保存', colors['icon_label_main']!),
-          CustomButton_Column_Iconlabel(Icons.delete_forever, '削除', colors['icon_label_delete']!),
+          CustomButton(
+              icon: Icons.edit, label: '編集', color: colors['icon_label_main']!,
+              onTap: (){
+                navigateToCreationPage(context);
+              },
+          ),
+          CustomButton(
+              icon: Icons.share, label: '共有', color: colors['icon_label_main']!),
+          CustomButton(
+              icon: Icons.file_download_outlined, label: '保存', color: colors['icon_label_main']!),
+          CustomButton(
+              icon: Icons.delete_forever, label: '削除', color: colors['icon_label_delete']!),
         ],
       ),
     );
@@ -87,12 +89,7 @@ class TierDitail extends StatelessWidget{
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             // todo 表一覧画面へ移動する処理を書く
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => TierCreationScreen()),
-              );
-            },
+            onPressed: () {},
           ),
           title: Text('ここはティア表の名前が入る'),
           elevation: 0.0,
@@ -110,4 +107,12 @@ class TierDitail extends StatelessWidget{
         ),
     );
   }
+}
+
+// 作成画面へ画面遷移する
+void navigateToCreationPage(BuildContext context) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => TierCreationScreen()),
+  );
 }
