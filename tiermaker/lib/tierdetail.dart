@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'custombutton.dart';
+import 'tier_creation_screen.dart';
 
 // todo メインページが出来次第消す。
 void main(){
@@ -18,6 +20,7 @@ class TierDitailScreen extends StatelessWidget{
 
 // 表詳細画面widgetを作成する。
 class TierDitail extends StatelessWidget{
+
   @override
   Widget build(BuildContext context) {
     // デバイスごとの幅と高さを取得
@@ -47,10 +50,18 @@ class TierDitail extends StatelessWidget{
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildButtonColumn(colors['icon_label_main']!, Icons.edit, '編集'),
-          _buildButtonColumn(colors['icon_label_main']!, Icons.share, '共有'),
-          _buildButtonColumn(colors['icon_label_main']!, Icons.file_download_outlined, '保存'),
-          _buildButtonColumn(colors['icon_label_delete']!, Icons.delete_forever_outlined, '削除')
+          CustomButton(
+              icon: Icons.edit, label: '編集', color: colors['icon_label_main']!,
+              onTap: (){
+                navigateToCreationPage(context);
+              },
+          ),
+          CustomButton(
+              icon: Icons.share, label: '共有', color: colors['icon_label_main']!),
+          CustomButton(
+              icon: Icons.file_download_outlined, label: '保存', color: colors['icon_label_main']!),
+          CustomButton(
+              icon: Icons.delete_forever, label: '削除', color: colors['icon_label_delete']!),
         ],
       ),
     );
@@ -74,6 +85,7 @@ class TierDitail extends StatelessWidget{
         backgroundColor: colors['black_background'],
         appBar: AppBar(
           backgroundColor: colors['black_background'],
+          // appbar左側ボタン
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             // todo 表一覧画面へ移動する処理を書く
@@ -95,50 +107,12 @@ class TierDitail extends StatelessWidget{
         ),
     );
   }
+}
 
-
-
-
-  // アイコンボタンウィジェットのchildを生成する
-  // color: アイコンとラベルの色
-  // icon: GoogleMaterialアイコン画像
-  // label: アイコン下部にある文字
-  // Todo fontやfontSizeについて、きちんと決定する。
-  ElevatedButton _buildButtonColumn(Color color, IconData icon, String label) {
-    return ElevatedButton(
-      // Todo ここに各ボタン押下時の挙動を記載。
-      onPressed: (){
-        print(label + 'pressed');
-      },
-      style: ElevatedButton.styleFrom(
-        //　ボタンの影を消す
-        elevation: 0,
-        // ボタンの背景色を画面の背景と同じにする
-        backgroundColor: Color(0xff272727)
-      ),
-
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-              icon,
-              size: 24,
-              color: color
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 1),
-            child: Text(
-              label,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w400,
-                color: color,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+// 作成画面へ画面遷移する
+void navigateToCreationPage(BuildContext context) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => TierCreationScreen()),
+  );
 }
